@@ -1,5 +1,7 @@
+require 'json'
 require 'csv'
-require 'pry'
+
+# Data is just from 6, 7, 8 graders
 
 # Education
 
@@ -7,11 +9,6 @@ require 'pry'
 # hours of homework
 # sleep hours school night
 # sleep hours non-school night
-
-# Social Media
-
-# text messages sent
-# hours of social media
 
 csv_data = File.read('50-student-sample.csv')
 csv = CSV.parse(csv_data, :headers=> true)
@@ -32,13 +29,11 @@ output << JSON.generate(student_data)
 output.close
 
 output = File.open('student_education_data.html', 'w')
-output << "<!DOCTYPE html><html><head><body><table><tr><th>State</th><th>Population (2014)</th><th>% of People with Home Computers (2014)</th><th>Number of Amusement Parks (2013)</th><th>% of People Who Ride Public Transit (2013)</th></tr>"
+output << "<!DOCTYPE html><html><head><body><h2>Data from 38 random 6th, 7th, and 8th graders:</h2><table><tr><th>Student</th><th>Travel Time to School</th><th>School Night Sleep (Hours)</th><th>Weekend Sleep (Hours)</th><th>Homework Hours</th></tr>"
 
-state_data.each do |state, data|
-  state_unslug = state.split("_").map(&:capitalize).join(" ")
-  output << "<tr><td>#{state_unslug}</td><td>#{data["population"]}</td><td>#{data["home_computer"]}</td><td>#{data["amusement_parks"]}</td><td>#{data["public_transit_riders"]}</td></tr>"
+student_data.each do |student, data|
+  output << "<tr><td>#{student}</td><td>#{data["travel_time"]}</td><td>#{data["school_night_sleep"]}</td><td>#{data["weekend_sleep"]}</td><td>#{data["homework_hours"]}</td></tr>"
 end
 
 output << "</table></body></html>"
-
 output.close
