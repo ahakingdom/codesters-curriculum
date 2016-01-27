@@ -1,1 +1,1 @@
-# codesters-curriclum
+# Codesters Curriculum Code
