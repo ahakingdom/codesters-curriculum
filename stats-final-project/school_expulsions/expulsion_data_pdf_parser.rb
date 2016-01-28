@@ -1,24 +1,30 @@
 require 'pdf-reader'
 require 'json'
+require 'pry'
+
 reader = PDF::Reader.new('School-Discipline-Snapshot.pdf')
 
-# puts reader.pdf_version
-# puts reader.info
-# puts reader.metadata
-# puts reader.page_count
+table_pt_1 = reader.page(12).text.split(/\n/)[10..-5]
+table_pt_2 = reader.page(13).text.split(/\n/)[6..-12]
+table_pt_2.delete_if {|row| row.split.length < 3}
 
-# puts reader.page(12)
+misaligned_states = ["Virginia", "Washington", "West Virginia", "Wisconsin", "Wyoming"]
 
-pg = reader.page(12)
-data_table = pg.text.split(/\n/)
-# data_table.delete_if { |line| line =~ /^\s*\n/ }
-# puts data_table[3] =~ /^\s*\n/ ? "yes" : "no"
-# puts data_table[10]
-data_table =  data_table[10..-5]
-# puts data_table
+i = -5
+state = 0
+while i < 0
+  no_state = table_pt_2[i].split()
+  add_state = no_state.unshift(misaligned_states[state]).join(" ")
+  table_pt_2[i] = add_state
+  i += 1
+  state += 1
+end
+
+expulsion_data_table_from_pdf = table_pt_1 + table_pt_2
+
 expulsion_data_males = {}
 
-data_table.each do |row|
+expulsion_data_table_from_pdf.each do |row|
   unless row == ""
     row_values = row.split(" ")
     state_name = row_values[0..-8].join(" ")
