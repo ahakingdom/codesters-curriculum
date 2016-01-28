@@ -25,7 +25,7 @@ expulsion_data_table_from_pdf = table_pt_1 + table_pt_2
 expulsion_data_males = {}
 
 expulsion_data_table_from_pdf.each do |row|
-  unless row == ""
+  unless row == "" || row.include?("Hawaii")
     row_values = row.split(" ")
     state_name = row_values[0..-8].join(" ")
     expulsion_data_males[state_name] = {
@@ -46,7 +46,7 @@ output.close
 
 
 output = File.open('us_schools_male_expulsions.html', 'w')
-output << "<!DOCTYPE html><html><head><body><h2>Out-of-school suspensions of male students by race/ethnicity, disability, and state: 2011-2012</h2><table><tr><th>State</th><th>American Indian/Alaska Native</th><th>Asian</th><th>Native Hawaiian/Other Pacific Islander</th><th>Black/African American</th><th>Hispanic/Latino of any race</th><th>Two or more races</th><th>White</th></tr>"
+output << "<!DOCTYPE html><html><head><body><h2>Out-of-school suspensions of male students by race/ethnicity, disability, and state: 2011-2012</h2><p>Note: Hawaii did not provide data</p><table><tr><th>State</th><th>American Indian/Alaska Native</th><th>Asian</th><th>Native Hawaiian/Other Pacific Islander</th><th>Black/African American</th><th>Hispanic/Latino of any race</th><th>Two or more races</th><th>White</th></tr>"
 
 expulsion_data_males.each do |state, data|
   output << "<tr><td>#{state}</td><td>#{data["amer_indian"]}</td><td>#{data["asian"]}</td><td>#{data["native_hawaiian"]}</td><td>#{data["black"]}</td><td>#{data["latino"]}</td><td>#{data["multiracial"]}</td><td>#{data["white"]}</td></tr>"
