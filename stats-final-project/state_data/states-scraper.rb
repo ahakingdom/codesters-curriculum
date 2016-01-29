@@ -2,7 +2,6 @@ require 'rubygems'
 require 'nokogiri' 
 require 'open-uri'
 require 'json'
-require 'pry'
 
 def separate_comma(number)
   number.to_s.chars.to_a.reverse.each_slice(3).map(&:join).join(",").reverse

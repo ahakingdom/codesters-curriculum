@@ -1,7 +1,5 @@
 require 'json'
 require 'csv'
-require 'pry'
-
 # data is from 2014
 
 # http://kff.org/global-indicator/people-living-with-hivaids/#

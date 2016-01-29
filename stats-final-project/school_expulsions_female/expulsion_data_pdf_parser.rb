@@ -1,6 +1,5 @@
 require 'pdf-reader'
 require 'json'
-require 'pry'
 
 reader = PDF::Reader.new('School-Discipline-Snapshot.pdf')
 

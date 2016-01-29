@@ -2,7 +2,6 @@
 # data from 2009 - 2013
 require 'json'
 require 'csv'
-require 'pry'
 
 def separate_comma(number)
   number.to_s.chars.to_a.reverse.each_slice(3).map(&:join).join(",").reverse
