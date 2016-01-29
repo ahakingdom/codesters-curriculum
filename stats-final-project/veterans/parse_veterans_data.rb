@@ -4,6 +4,9 @@ require 'json'
 require 'csv'
 require 'pry'
 
+def separate_comma(number)
+  number.to_s.chars.to_a.reverse.each_slice(3).map(&:join).join(",").reverse
+end
 
 csv_data = File.read('veterans_data.csv')
 csv = CSV.parse(csv_data, :headers=> true)
@@ -25,10 +28,12 @@ output << JSON.generate(veterans_data)
 output.close
 
 output = File.open('veterans_data.html', 'w')
-output << "<!DOCTYPE html><html><head><body><h2>Characteristics of Veterans</h2><table><tr><th>State</th><th>Veteran Population</th><th>Percent Female</th><th>Median Household Income</th><th>Bachelor's Degree or Higher</th></tr>"
+output << "<!DOCTYPE html><html><head><body><h2>Characteristics of Veterans by State</h2><table><tr><th>State</th><th>Veteran Population</th><th>% Female</th><th>Median Household Income ($)</th><th>Bachelor's Degree or Higher (%)</th></tr>"
 
 veterans_data.each do |state, data|
-  output << "<tr><td>#{state}</td><td>#{data["vet_pop"]}</td><td>#{data["percent_female"]}</td><td>#{data["median_income"]}</td><td>#{data["college_grads"]}</td></tr>"
+  vet_pop = separate_comma(data["vet_pop"])
+  median_income = separate_comma(data["median_income"])
+  output << "<tr><td>#{state}</td><td>#{vet_pop}</td><td>#{data["percent_female"]}</td><td>#{median_income}</td><td>#{data["college_grads"]}</td></tr>"
 end
 
 output << "</table></body></html>"

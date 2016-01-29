@@ -4,6 +4,10 @@ require 'open-uri'
 require 'json'
 require 'pry'
 
+def separate_comma(number)
+  number.to_s.chars.to_a.reverse.each_slice(3).map(&:join).join(",").reverse
+end
+
 page = Nokogiri::HTML(open("http://www.census.gov/schools/facts/alabama.html"))   
 
 state_names_elements = page.css('#pickState option')
@@ -44,8 +48,9 @@ output = File.open('state_data.html', 'w')
 output << "<!DOCTYPE html><html><head><body><table><tr><th>State</th><th>Population (2014)</th><th>% of People with Home Computers (2014)</th><th>Number of Amusement Parks (2013)</th><th>% of People Who Ride Public Transit (2013)</th></tr>"
 
 state_data.each do |state, data|
+  population = separate_comma(data["population"])
   state_unslug = state.split("_").map(&:capitalize).join(" ")
-  output << "<tr><td>#{state_unslug}</td><td>#{data["population"]}</td><td>#{data["home_computer"]}</td><td>#{data["amusement_parks"]}</td><td>#{data["public_transit_riders"]}</td></tr>"
+  output << "<tr><td>#{state_unslug}</td><td>#{population}</td><td>#{data["home_computer"]}</td><td>#{data["amusement_parks"]}</td><td>#{data["public_transit_riders"]}</td></tr>"
 end
 
 output << "</table></body></html>"

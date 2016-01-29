@@ -29,7 +29,7 @@ output << JSON.generate(student_data)
 output.close
 
 output = File.open('student_education_data.html', 'w')
-output << "<!DOCTYPE html><html><head><body><h2>Data from 38 random 6th, 7th, and 8th graders:</h2><table><tr><th>Student</th><th>Travel Time to School</th><th>School Night Sleep (Hours)</th><th>Weekend Sleep (Hours)</th><th>Homework Hours</th></tr>"
+output << "<!DOCTYPE html><html><head><body><h2>Data from 38 random 6th, 7th, and 8th graders:</h2><table><tr><th>Student</th><th>Travel Time to School (Minutes)</th><th>School Night Sleep (Hours)</th><th>Weekend Sleep (Hours)</th><th>Time Spent on Homework (Hours)</th></tr>"
 
 student_data.each do |student, data|
   output << "<tr><td>#{student}</td><td>#{data["travel_time"]}</td><td>#{data["school_night_sleep"]}</td><td>#{data["weekend_sleep"]}</td><td>#{data["homework_hours"]}</td></tr>"

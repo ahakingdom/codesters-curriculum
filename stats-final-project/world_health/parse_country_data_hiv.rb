@@ -5,6 +5,9 @@ require 'pry'
 # data is from 2014
 
 # http://kff.org/global-indicator/people-living-with-hivaids/#
+def separate_comma(number)
+  number.to_s.chars.to_a.reverse.each_slice(3).map(&:join).join(",").reverse
+end
 
 csv_data = File.read('hiv_aids_data_by_country.csv')
 csv = CSV.parse(csv_data, :headers=> true)
@@ -37,7 +40,10 @@ output = File.open('country_hiv_aids_data.html', 'w')
 output << "<!DOCTYPE html><html><head><body><h2>People living with HIV/AIDS around the world</h2><table><tr><th>Country</th><th>People Living with HIV/AIDS (2014)</th><th>People Receiving Antiretroviral Therapy (2014)</th><th>AIDS Deaths (2014)</th></tr>"
 
 country_hiv_aids_data.each do |country, data|
-  output << "<tr><td>#{country}</td><td>#{data["people_living_with_hiv_aids"]}</td><td>#{data["people_receiving_ART"]}</td><td>#{data["aids_deaths"]}</td></tr>"
+  people_living_with_hiv_aids = separate_comma(data["people_living_with_hiv_aids"])
+  people_receiving_ART = separate_comma(data["people_receiving_ART"])
+  aids_deaths = separate_comma(data["aids_deaths"])
+  output << "<tr><td>#{country}</td><td>#{people_living_with_hiv_aids}</td><td>#{people_receiving_ART}</td><td>#{aids_deaths}</td></tr>"
 end
 
 output << "</table></body></html>"
