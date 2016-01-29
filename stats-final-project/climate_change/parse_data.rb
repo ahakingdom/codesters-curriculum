@@ -46,7 +46,7 @@ months.each do |month_name, month_num|
 
   file_name = "#{month_name.downcase}_climate_data.html"
   output = File.open(file_name, 'w')
-  output << "<!DOCTYPE html><html><head><body><h2>Contiguous US Average, Maximum, and Minimum Temperature for #{month_name}, 1965-2015</h2><table><tr><th>Month, Year</th><th>Average Temp (&degF)</th><th>Maximum Temp (&degF)</th><th>Minimum Temp (&degF)</th></tr>"
+  output << "<!DOCTYPE html><html><head><body><h2>Average, Maximum, and Minimum Temperature for #{month_name} 1965-2015 in the 48 Contiguous US States</h2><table><tr><th>Month, Year</th><th>Average Temp (&degF)</th><th>Maximum Temp (&degF)</th><th>Minimum Temp (&degF)</th></tr>"
 
   climate_hash.each do |year, data|
     output << "<tr><td>#{year}</td><td>#{data["avg_temp"]}</td><td>#{data["max_temp"]}</td><td>#{data["min_temp"]}</td></tr>"

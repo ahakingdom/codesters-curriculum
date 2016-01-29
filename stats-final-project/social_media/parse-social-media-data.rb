@@ -11,9 +11,9 @@ student_data = {}
 
 csv.each_with_index do |row, i|
   student_data["student_#{i + 1}"] = {
-     "text_message_sent" => row["Text_Messages_Sent_Yesterday"], 
-     "text_message_received" => row["Text_Messages_Received_Yesterday"],
-     "social_websites" => row["Social_Websites_Hours"],
+     "text_message_sent" => row["Text_Messages_Sent_Yesterday"].to_i, 
+     "text_message_received" => row["Text_Messages_Received_Yesterday"].to_i,
+     "social_websites" => row["Social_Websites_Hours"].to_i,
   }
 end
 
